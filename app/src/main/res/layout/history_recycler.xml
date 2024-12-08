@@ -19,44 +19,23 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tvItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Item Barang"
         android:textColor="@color/black"
-        android:textSize="27sp"
+        android:textSize="32sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvTanggal"
         app:layout_constraintTop_toBottomOf="@+id/tvTanggal"
         tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/tvJumlah"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Jumlah"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvTanggal"
-        app:layout_constraintTop_toBottomOf="@+id/tvItem" />
-
-    <TextView
-        android:id="@+id/btnEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_edge"
-        android:padding="8dp"
-        app:drawableStartCompat="@drawable/baseline_app_registration_24"
-        app:drawableTint="#1C9A00"
-        app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-        app:layout_constraintTop_toTopOf="@+id/tvTanggal" />
 
     <TextView
         android:id="@+id/btnDelete"
@@ -67,20 +46,20 @@
         android:padding="8dp"
         app:drawableStartCompat="@drawable/cross"
         app:drawableTint="@android:color/holo_red_dark"
-        app:layout_constraintBottom_toBottomOf="@+id/btnEdit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnEdit" />
+        app:layout_constraintTop_toTopOf="@+id/tvTanggal" />
 
-    <Button
-        android:id="@+id/btnAction"
+    <TextView
+        android:id="@+id/tvJumlah"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="?android:attr/colorPressedHighlight"
-        android:text="Finish"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvJumlah"
+        android:text="Jumlah"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvItem"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvItem"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

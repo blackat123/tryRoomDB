@@ -3,6 +3,7 @@ package com.example.tryroomdb
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,6 +11,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tryroomdb.database.daftarBelanja
 import com.example.tryroomdb.database.daftarBelanjaDB
+import com.example.tryroomdb.database.historyBelanja
+import com.example.tryroomdb.database.historyBelanjaDB
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +22,7 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
     // global variable
     private lateinit var DB: daftarBelanjaDB
+    private lateinit var DBHistory : historyBelanjaDB
     private lateinit var adapterDaftar: adapterRevView
     private var arDaftar: MutableList<daftarBelanja> = mutableListOf()
 
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         // inisialisasi view
         val _fabAdd = findViewById<FloatingActionButton>(R.id.fabAdd)
+        val _btnHistory = findViewById<Button>(R.id.btnHistory)
         adapterDaftar = adapterRevView(arDaftar)
         var _rvDaftar = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rvDaftar)
         _rvDaftar.layoutManager = LinearLayoutManager(this)
@@ -41,16 +46,38 @@ class MainActivity : AppCompatActivity() {
 
         // inisialisasi db
         DB = daftarBelanjaDB.getDatabase(this)
+        DBHistory = historyBelanjaDB.getDatabase(this)
 
         // event click listener
         _fabAdd.setOnClickListener {
             startActivity(Intent(this, TambahDaftar::class.java))
         }
 
+        _btnHistory.setOnClickListener {
+            startActivity(Intent(this, History::class.java))
+        }
+
         adapterDaftar.setOnItemClickCallBack(
             object : adapterRevView.OnItemClickCallBack {
                 override fun delData(dtBelanja: daftarBelanja) {
                     CoroutineScope(Dispatchers.IO).async {
+                        DB.fundaftarBelanjaDAO().delete(dtBelanja)
+                        val daftarBelanja = DB.fundaftarBelanjaDAO().selectAll()
+                        withContext(Dispatchers.Main) {
+                            adapterDaftar.isiData(daftarBelanja)
+                        }
+                    }
+                }
+
+                override fun statusData(dtBelanja: daftarBelanja) {
+                    CoroutineScope(Dispatchers.IO).async {
+                        DBHistory.funhistoryBelanjaDAO().insert(
+                            historyBelanja(
+                                tanggal = dtBelanja.tanggal,
+                                item = dtBelanja.item,
+                                jumlah = dtBelanja.jumlah
+                            )
+                        )
                         DB.fundaftarBelanjaDAO().delete(dtBelanja)
                         val daftarBelanja = DB.fundaftarBelanjaDAO().selectAll()
                         withContext(Dispatchers.Main) {

@@ -81,7 +81,7 @@ class TambahDaftar : AppCompatActivity() {
                     pilihid = iId,
                     isi_tanggal = tanggal,
                     isi_item = _etItem.text.toString(),
-                    isi_jumlah = _etJumlah.text.toString()
+                    isi_jumlah = _etJumlah.text.toString(),
                 )
             }
             finish()
